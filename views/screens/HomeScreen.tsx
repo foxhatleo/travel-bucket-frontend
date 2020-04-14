@@ -2,8 +2,12 @@ import {FunctionComponent} from "react";
 import FullImageBackground from "../components/FullImageBackground";
 import Link from "next/link";
 
-const HomeScreen: FunctionComponent = () => {
-    return <div className={"container"}>
+export type HomeScreenProps = {
+    pureBG: boolean;
+};
+
+const HomeScreen: FunctionComponent<HomeScreenProps> = (p) => {
+    return <div className={"container" + (p.pureBG ? " pure" : "")}>
         <div className={"bg"}>
             <FullImageBackground url={"bg/home-bg1.jpg"} />
         </div>
@@ -31,6 +35,11 @@ const HomeScreen: FunctionComponent = () => {
           bottom: 0;
           right: 0;
           left: 30%;
+          opacity: 1;
+          transition: 1s ease-in-out opacity;
+        }
+        .pure .search {
+          opacity: 0;
         }
         .search .bg1 {
           position: absolute;
@@ -94,6 +103,10 @@ const HomeScreen: FunctionComponent = () => {
             left: 0;
             right: 0;
             height: 60%;
+            transition: 1s ease-in-out height;
+          }
+          .pure .bg {
+            height: 100%;
           }
           .search {
             top : 40%;

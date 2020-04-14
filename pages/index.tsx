@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {PageReportProps} from "./_app";
 
 export default (p: PageReportProps) => {
-    p.report({showSearch: false});
+    useEffect(() => {
+        p.report({showSearch: false});
+    });
     return <></>;
 };

@@ -22,7 +22,7 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
     }
 
     return <>
-        <HomeScreen />
+        <HomeScreen pureBG={showSearch} />
         <SearchScreen showing={showSearch} />
         <Component {...pageProps} report={report} />
         <Head>
@@ -95,6 +95,12 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
         html, body, #__next {
           width: 100%;
           height: 100%;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus,
+        button:focus {
+          outline: none;
         }
         `}</style>
     </>;

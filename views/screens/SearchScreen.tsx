@@ -1,4 +1,4 @@
-import {FunctionComponent, useState} from "react";
+import React, {FunctionComponent, useState} from "react";
 
 export type SearchScreenProps = {
     showing: boolean;
@@ -19,21 +19,47 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
     }
 
     return <div className={"container" + (p.showing ? "" : " hidden")}
-                style={{display: p.showing ? "block" : "none"}}
+                style={{visibility: (displayHidden ? "hidden" : "visible")}}
                 onTransitionEnd={transitionEnds}>
+        <div className={"inner-container"}>
+            <form>
+                <input type={"text"} placeholder={"Enter a search term to start."} />
+            </form>
+        </div>
         <style jsx>{`
         .container {
           background: white;
+          background: rgba(255, 255, 255, .6);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           width: 100%;
           height: 100%;
           position: relative;
           opacity: 1;
           z-index: 5;
-          transition: 10s ease-in-out opacity;
-          display: block;
+          transition: .5s ease-in-out opacity;
         }
         .container.hidden {
           opacity: 0;
+        }
+        .inner-container {
+          width: 100%;
+          max-width: 1000px;
+          padding: 15px;
+          margin: 0 auto;
+        }
+        form, input {
+          width: 100%;
+        }
+        input {
+          color: black;
+          padding: 10px;
+          appearance: none;
+          font-size: 20px;
+          font-weight: 400;
+          border: none;
+          background: none;
+          border-bottom: 1px solid #999;
         }
         `}</style>
     </div>;

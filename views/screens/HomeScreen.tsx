@@ -1,5 +1,6 @@
 import {FunctionComponent} from "react";
 import FullImageBackground from "../components/FullImageBackground";
+import Link from "next/link";
 
 const HomeScreen: FunctionComponent = () => {
     return <div className={"container"}>
@@ -12,6 +13,7 @@ const HomeScreen: FunctionComponent = () => {
             <div className={"search-inner"}>
                 <div className={"subtext"}>FIND YOURSELF IN TRAVEL</div>
                 <h1>Travel Bucket</h1>
+                <Link href={"/search"}><a className={"search-go button"}>Start exploring!</a></Link>
             </div>
         </div>
         <style jsx>{`
@@ -21,6 +23,7 @@ const HomeScreen: FunctionComponent = () => {
           left: 0;
           right: 0;
           bottom: 0;
+          z-index: 0;
         }
         .search {
           position: absolute;
@@ -81,6 +84,9 @@ const HomeScreen: FunctionComponent = () => {
           font-size: 50px;
           font-weight: 300;
         }
+        .search-go {
+          margin-top: 15px;
+        }
         @media screen and (max-width: 550px) {
           .bg {
             position: absolute;
@@ -94,6 +100,13 @@ const HomeScreen: FunctionComponent = () => {
             left: 0;
             right: 0;
             bottom: 0;
+          }
+          .search-inner {
+            text-align: center;
+            margin-top: 10%;
+          }
+          h1 {
+            font-size: 42px;
           }
           .search .bg1 {
             top: 0;

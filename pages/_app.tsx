@@ -1,13 +1,30 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useState} from "react";
 import {AppProps} from "next/app";
 import Head from "next/head";
+import HomeScreen from "../views/screens/HomeScreen";
+import SearchScreen from "../views/screens/SearchScreen";
+
+export type ReportFunc = (p: {showSearch: boolean}) => void;
+
+export type PageReportProps = {
+    report: ReportFunc;
+};
 
 /**
  * Default app entry point. Include any global CSS and JS libraries here.
  */
 const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
+
+    const [showSearch, setShowSearch] = useState(false);
+
+    const report: ReportFunc = (r) => {
+        setShowSearch(r.showSearch);
+    }
+
     return <>
-        <Component {...pageProps} />
+        <HomeScreen />
+        <SearchScreen showing={showSearch} />
+        <Component {...pageProps} report={report} />
         <Head>
             <title>Travel Bucket</title>
         </Head>
@@ -26,6 +43,7 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
         figure, figcaption, footer, header, hgroup, 
         menu, nav, output, ruby, section, summary,
         time, mark, audio, video {
+          font-size: 12px;
           margin: 0;
           padding: 0;
           border: 0;
@@ -56,6 +74,27 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
         table {
           border-collapse: collapse;
           border-spacing: 0;
+        }
+        .button {
+          display: inline-block;
+          font-size: 15px;
+          text-decoration: none;
+          font-weight: 700;
+          text-transform: uppercase;
+          color: white;
+          background: #1976d2;
+          transition: .3s ease-in-out background;
+          padding: 10px;
+        }
+        .button:hover {
+          background: #2196f3;
+        }
+        .button:active {
+          background: #0d47a1;
+        }
+        html, body, #__next {
+          width: 100%;
+          height: 100%;
         }
         `}</style>
     </>;

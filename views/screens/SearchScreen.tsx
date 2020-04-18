@@ -45,9 +45,9 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
         <style jsx>{`
         .container {
           background: white;
-          background: rgba(255, 255, 255, .6);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
+          background: rgba(255, 255, 255, .5);
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
           width: 100%;
           height: 100%;
           position: relative;

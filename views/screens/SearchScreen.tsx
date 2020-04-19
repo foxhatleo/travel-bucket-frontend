@@ -9,9 +9,10 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
 
     const [displayHidden, setDisplayHidden] = useState<boolean>(true);
     const [searchCity, setSearchCity] = useState<string>("");
+    const [searchTopics, setSearchTopics] = useState<string>("");
 
     const fetchData = () => {
-        fetchResults(searchCity).then(data => {
+        fetchResults(searchCity, searchTopics).then(data => {
             console.log(data);
         });
     }
@@ -31,15 +32,24 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
                 onTransitionEnd={transitionEnds}>
         <div className={"inner-container"}>
             <form onSubmit={e => {
-                 fetchData();
-                 e.preventDefault();
+                fetchData();
+                e.preventDefault();
             }}>
                 <input
-                    type={"text"}
-                    placeholder={"Enter a search term to start."}
+                    type="text"
+                    placeholder="Enter a search city to start."
                     value={searchCity}
+                    name="city"
                     onChange={e => setSearchCity(e.target.value)}
                 />
+                <input
+                    type="text"
+                    placeholder="Enter search topic(s) to start."
+                    value={searchTopics}
+                    name="topics"
+                    onChange={e => setSearchTopics(e.target.value)}
+                />
+                <button type="submit" className={"button"}>Submit</button>
             </form>
         </div>
         <style jsx>{`

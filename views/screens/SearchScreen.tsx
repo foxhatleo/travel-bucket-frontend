@@ -1,4 +1,5 @@
 import React, {FunctionComponent, useState} from "react";
+import { fetchResults } from "../../utils/fetchData";
 
 export type SearchScreenProps = {
     showing: boolean;
@@ -7,6 +8,13 @@ export type SearchScreenProps = {
 const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
 
     const [displayHidden, setDisplayHidden] = useState<boolean>(true);
+    const [searchCity, setSearchCity] = useState<string>("");
+
+    const fetchData = () => {
+        fetchResults(searchCity).then(data => {
+            console.log(data);
+        });
+    }
 
     function transitionEnds() {
         if (!p.showing) {
@@ -22,8 +30,16 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
                 style={{visibility: (displayHidden ? "hidden" : "visible")}}
                 onTransitionEnd={transitionEnds}>
         <div className={"inner-container"}>
-            <form>
-                <input type={"text"} placeholder={"Enter a search term to start."} />
+            <form onSubmit={e => {
+                 fetchData();
+                 e.preventDefault();
+            }}>
+                <input
+                    type={"text"}
+                    placeholder={"Enter a search term to start."}
+                    value={searchCity}
+                    onChange={e => setSearchCity(e.target.value)}
+                />
             </form>
         </div>
         <style jsx>{`

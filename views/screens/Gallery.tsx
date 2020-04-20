@@ -33,7 +33,8 @@ const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p
           -webkit-backdrop-filter: blur(15px);
         }
         .block {
-          width: 25vw;
+          // width: 25vw
+          flex: 1 0 21%;
           height: 25vw;
           display: inline-block;
           position: relative;

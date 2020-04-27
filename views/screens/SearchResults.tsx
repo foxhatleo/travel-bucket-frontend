@@ -1,4 +1,4 @@
-import {FunctionComponent} from "react";
+import React, {FunctionComponent} from "react";
 import Spinner from "../components/Spinner";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
 import {SearchResult, SearchResults as SearchResultsArray} from "./SearchScreen";
@@ -9,6 +9,16 @@ export enum SearchResultsStatus {
     RESULT,
     NO_RESULT,
     ERROR,
+}
+
+const getSentimentArrows = (sentiment: number) => {
+    const arrowType = sentiment > 0 ? "\u2191" : "\u2193";
+    const absoluteSentiment = Math.abs(sentiment);
+    let numArrows;
+    if (absoluteSentiment > 0.66) numArrows = 3;
+    if (absoluteSentiment < 0.66 && absoluteSentiment > 0.33) numArrows = 2;
+    if (absoluteSentiment < 0.33) numArrows = 1;
+    return '' + arrowType.repeat(numArrows);
 }
 
 const SearchResults: FunctionComponent<{
@@ -48,7 +58,20 @@ const SearchResults: FunctionComponent<{
                                     e.preventDefault();
                                     p.showGallery(r);
                                 }}>
-                                    <span>{r.name}</span>
+                                    <span className={"city-name"}>{r.name}</span>
+                                    <div className={"sentiment"}>
+                                        Sentiment: {r.sentiment["avg_sentiment"].toFixed(2)} &nbsp;
+                                        <span
+                                            style={{ 
+                                                color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
+                                                fontSize: "16px",
+                                                position: "relative",
+                                                bottom: "2px",
+                                            }}
+                                        >
+                                        {getSentimentArrows(r.sentiment["avg_sentiment"])}
+                                        </span>
+                                    </div>
                                 </a>
                             </div>)}
                     </div>
@@ -92,7 +115,7 @@ const SearchResults: FunctionComponent<{
           -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
           box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
         }
-        .item span {
+        .item span.city-name {
           display: block;
           line-height: 100px;
           width: 100%;
@@ -150,6 +173,18 @@ const SearchResults: FunctionComponent<{
         .fade-enter-active,
         .fade-exit-active{
            transition: opacity 500ms;
+        }
+        .sentiment {
+            position: relative;
+            left: 85%;
+            top: -35px;
+            width: 140px;
+            height: 30px;
+            font-size: 14px;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
         }
         `}</style>
     </div>;

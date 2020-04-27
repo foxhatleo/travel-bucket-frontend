@@ -1,16 +1,20 @@
 import React, {FunctionComponent, useState} from "react";
 import SearchResults, {SearchResultsStatus} from "./SearchResults";
-import Gallery from "./Gallery";
+import {Gallery} from "./Gallery";
 import {fetchResults} from "../../utils/fetchData";
 
-export type SearchScreenProps = {
+export interface SearchScreenProps {
     showing: boolean;
 }
 
-export type SearchResult = {
+export interface SearchResult {
     images: string[];
     name: string;
-}[];
+    reviews: string[];
+    sentiment: {};
+};
+
+export type SearchResults = SearchResult[];
 
 const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
 
@@ -18,8 +22,8 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
     const [searchCity, setSearchCity] = useState<string>("");
     const [searchTopics, setSearchTopics] = useState<string>("");
     const [resultState, setResultState] = useState<SearchResultsStatus>(SearchResultsStatus.ASK_INPUT);
-    const [result, setResult] = useState<SearchResult>(null);
-    const [gallery, setGallery] = useState<string[]>(null);
+    const [results, setResults] = useState<SearchResults>(null);
+    const [gallery, setGallery] = useState<SearchResult>(null);
 
     const fetchData = () => {
         // setResultState(SearchResultsStatus.RESULT);
@@ -30,7 +34,7 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
                 setResultState(SearchResultsStatus.NO_RESULT);
             } else {
                 setResultState(SearchResultsStatus.RESULT);
-                setResult(data);
+                setResults(data);
             }
         }).catch((r) => {
             setResultState(SearchResultsStatus.ERROR);
@@ -75,9 +79,9 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
                 />
                 <button type="submit" className={"button"}>Submit</button>
             </form>
-            <SearchResults status={resultState} result={result} showGallery={setGallery} />
+            <SearchResults status={resultState} results={results} showGallery={setGallery} />
         </div>
-        <Gallery gallery={gallery} onClose={() => {setGallery(null);}} />
+        <Gallery result={gallery} onClose={() => {setGallery(null);}} />
         <style jsx>{`
         .container {
           background: white;

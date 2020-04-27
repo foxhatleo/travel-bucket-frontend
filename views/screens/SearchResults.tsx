@@ -1,7 +1,7 @@
 import {FunctionComponent} from "react";
 import Spinner from "../components/Spinner";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
-import {SearchResult} from "./SearchScreen";
+import {SearchResult, SearchResults as SearchResultsArray} from "./SearchScreen";
 
 export enum SearchResultsStatus {
     ASK_INPUT,
@@ -13,8 +13,8 @@ export enum SearchResultsStatus {
 
 const SearchResults: FunctionComponent<{
     status: SearchResultsStatus;
-    result: SearchResult;
-    showGallery: (g: string[]) => void;
+    results: SearchResultsArray;
+    showGallery: (g: SearchResult) => void;
 }> = (p) => {
 
     const is = (i: SearchResultsStatus) => (p.status == i ? " shown" : "");
@@ -40,13 +40,13 @@ const SearchResults: FunctionComponent<{
                         An error happened. 😵 Check console for more info please.
                     </div>
                     <div className={"result parent" + (is(SearchResultsStatus.RESULT))}>
-                        {p.result && p.result.map((r, i) =>
+                        {p.results && p.results.map((r, i) =>
                             <div className={"item-container"}>
                                 <a className={"item"} key={i} href={"#"} style={r.images.length > 0 ? {
                                     backgroundImage: `url(${r.images[0]}`,
                                 } : {}} onClick={(e) => {
                                     e.preventDefault();
-                                    p.showGallery(r.images);
+                                    p.showGallery(r);
                                 }}>
                                     <span>{r.name}</span>
                                 </a>

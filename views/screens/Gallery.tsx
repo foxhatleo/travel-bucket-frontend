@@ -1,11 +1,13 @@
 import {FunctionComponent, useState} from "react";
 import {CSSTransition} from "react-transition-group";
 import Lightbox from "react-image-lightbox";
+import {SearchResult} from "../screens/SearchScreen";
 
-const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p) => {
-    const isIn = !!(p.gallery && p.gallery.length > 0);
-    const [isLightBoxOpen, setLightBoxOpen] = useState(false);
-    const [lightboxURL, setlightboxURL] = useState("");
+export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: () => void;}> = (p) => {
+    const { result } = p;
+    const { images } = result || {};
+    const isIn = !!(result && images);
+    const [lightboxIndex, setlightboxIndex] = useState<number>(-1);
     return <div>
         <CSSTransition in={isIn} timeout={200} classNames="fade">
             {isIn ? <div className={"gallery"}>
@@ -13,13 +15,12 @@ const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p
                     e.preventDefault();
                     p.onClose();
                 }}><span>Go Back</span></a>
-                {p.gallery.map((r, i) =>
+                {images.map((r, i) =>
                     <button
                         className={"block"}
                         key={i} 
                         onClick={() => {
-                            setlightboxURL(r);
-                            setLightBoxOpen(true);
+                            setlightboxIndex(i);
                         }}
                         style={{
                             cursor: "pointer",
@@ -29,10 +30,18 @@ const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p
                 )}
             </div> : <></>}
         </CSSTransition>
-        {isLightBoxOpen && 
+        {lightboxIndex !== -1 && 
         <Lightbox
-            mainSrc={lightboxURL}
-            onCloseRequest={() => setLightBoxOpen(false)}
+            mainSrc={images[lightboxIndex]}
+            onCloseRequest={() => setlightboxIndex(-1)}
+            nextSrc={images[(lightboxIndex + 1) % images.length]}
+            prevSrc={images[(lightboxIndex + images.length - 1) % images.length]}
+            onMovePrevRequest={() =>
+                setlightboxIndex((lightboxIndex + images.length - 1) % images.length)
+            }
+            onMoveNextRequest={() =>
+                setlightboxIndex((lightboxIndex + 1) % images.length)
+            }
         />}
         <style jsx>{`
         .gallery {
@@ -104,6 +113,3 @@ const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p
         `}</style>
     </div>;
 };
-
-export default Gallery;
-

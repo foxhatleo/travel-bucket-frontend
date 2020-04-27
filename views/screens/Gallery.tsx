@@ -1,8 +1,11 @@
-import {FunctionComponent} from "react";
+import {FunctionComponent, useState} from "react";
 import {CSSTransition} from "react-transition-group";
+import Lightbox from "react-image-lightbox";
 
 const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p) => {
     const isIn = !!(p.gallery && p.gallery.length > 0);
+    const [isLightBoxOpen, setLightBoxOpen] = useState(false);
+    const [lightboxURL, setlightboxURL] = useState("");
     return <div>
         <CSSTransition in={isIn} timeout={200} classNames="fade">
             {isIn ? <div className={"gallery"}>
@@ -11,11 +14,26 @@ const Gallery: FunctionComponent<{gallery: string[]; onClose: () => void;}> = (p
                     p.onClose();
                 }}><span>Go Back</span></a>
                 {p.gallery.map((r, i) =>
-                    <a className={"block"} key={i} style={{
-                        backgroundImage: `url(${r})`
-                    }} href={r} />)}
+                    <button
+                        className={"block"}
+                        key={i} 
+                        onClick={() => {
+                            setlightboxURL(r);
+                            setLightBoxOpen(true);
+                        }}
+                        style={{
+                            cursor: "pointer",
+                            backgroundImage: `url(${r})`
+                        }} 
+                    />
+                )}
             </div> : <></>}
         </CSSTransition>
+        {isLightBoxOpen && 
+        <Lightbox
+            mainSrc={lightboxURL}
+            onCloseRequest={() => setLightBoxOpen(false)}
+        />}
         <style jsx>{`
         .gallery {
           position: fixed;

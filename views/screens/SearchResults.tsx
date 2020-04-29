@@ -60,7 +60,13 @@ const SearchResults: FunctionComponent<{
                                 }}>
                                     <span className={"city-name"}>{r.name}</span>
                                     <div className={"sentiment"}>
-                                        Sentiment: {r.sentiment["avg_sentiment"].toFixed(2)} &nbsp;
+                                        <div className="tooltip">Sentiment
+                                            <span className="tooltiptext">
+                                                Sentiment is calculated on the Google Reviews for each location using nltk. 
+                                                From -1 (most negative) to 1 (most positive)
+                                            </span>
+                                        </div>
+                                        :&nbsp;{r.sentiment["avg_sentiment"].toFixed(2)}&nbsp;
                                         <span
                                             style={{ 
                                                 color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
@@ -186,6 +192,45 @@ const SearchResults: FunctionComponent<{
             align-items: center;
             padding-left: 5px;
         }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted white;
+            width: auto;
+          }
+          
+          .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+          }
+          
+          .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+          }
+          
+          .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+          }
         `}</style>
     </div>;
 };

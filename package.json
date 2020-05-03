@@ -13,6 +13,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-image-lightbox": "^5.1.1",
+    "react-tagsinput": "^3.19.0",
     "react-transition-group": "4.3.0"
   },
   "devDependencies": {

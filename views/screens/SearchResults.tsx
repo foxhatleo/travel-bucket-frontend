@@ -269,12 +269,11 @@ const SearchResults: FunctionComponent<{
         .review-box {
             margin-left: 40px;
             margin-right: 30px;
-            background-color: black;
+            background-color: rgba(0,0,0,0.4);
             color: white;
             font-size: 13px;
             height: fit-content;
             max-height: 130px;
-            opacity: 0.8;
             overflow-y: auto;
             line-height: 1.4;
         }

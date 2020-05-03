@@ -275,7 +275,7 @@ const SearchResults: FunctionComponent<{
             height: fit-content;
             max-height: 130px;
             opacity: 0.8;
-            overflow: scroll;
+            overflow-y: auto;
             line-height: 1.4;
         }
         `}</style>

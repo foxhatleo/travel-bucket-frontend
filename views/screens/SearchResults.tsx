@@ -61,43 +61,42 @@ const SearchResults: FunctionComponent<{
                                     <div className={"item"}>
                                         <div className="location-name">
                                             <span>Location:</span>
-                                            <p style={{ marginLeft: "70px"}}>{r.name}</p>
+                                            <p style={{ paddingLeft: "100px"}}>{r.name}</p>
                                         </div>
                                         <div className="top-review-text">
-                                            <span style={{ whiteSpace: "nowrap" }}>Top Review: </span>
+                                            <div className="tooltip">
+                                                <p style={{ whiteSpace: "nowrap" }}>Top Review:</p>
+                                                <span className="tooltiptext">
+                                                    The review with the most words in common with your search topic(s).
+                                                </span>
+                                            </div>
                                             <p className="review-box" dangerouslySetInnerHTML={{ __html: r.sentiment["most_positive"][0] }} />
                                         </div>
-                                        <div className="top-review-sentiment">
-                                            <p style={{lineHeight: "normal"}}>
-                                                Top Review <br /> Sentiment:
-                                            </p>
-                                            <span className="" style={{
-                                                paddingLeft: "50px",
+                                        <div>
+                                            <div className="tooltip">
+                                                <p>Avg Sentiment:</p>
+                                                <span className="tooltiptext">
+                                                    Sentiment is calculated on the Google Reviews for each location using nltk. 
+                                                    From -1 (most negative) to 1 (most positive)
+                                                </span>
+                                            </div>
+                                            <span style={{
+                                                paddingLeft: "38px",
                                             }}>
-                                                {r.sentiment["most_positive"][1].toFixed(2)}
+                                                {r.sentiment["avg_sentiment"].toFixed(2)}
+                                                <span style={{ 
+                                                    color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
+                                                    fontSize: "16px",
+                                                    position: "relative",
+                                                    bottom: "4px",
+                                                    paddingLeft: "5px",
+                                                }}>
+                                                    {getSentimentArrows(r.sentiment["avg_sentiment"])}
+                                                </span>
                                             </span>
                                         </div>
                                     </div>                                        
                                 </a>
-                                <div className={"avg-sentiment"}>
-                                    <div className="tooltip">Avg. Sentiment
-                                        <span className="tooltiptext">
-                                            Sentiment is calculated on the Google Reviews for each location using nltk. 
-                                            From -1 (most negative) to 1 (most positive)
-                                        </span>
-                                    </div>
-                                    :&nbsp;{r.sentiment["avg_sentiment"].toFixed(2)}&nbsp;
-                                    <span
-                                        style={{ 
-                                            color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
-                                            fontSize: "16px",
-                                            position: "relative",
-                                            bottom: "2px",
-                                        }}
-                                    >
-                                    {getSentimentArrows(r.sentiment["avg_sentiment"])}
-                                    </span>
-                                </div>
                             </>)}
                     </div>
                 </div>
@@ -195,19 +194,6 @@ const SearchResults: FunctionComponent<{
         .fade-exit-active{
            transition: opacity 500ms;
         }
-        .avg-sentiment {
-            position: relative;
-            left: 81%;
-            top: -40px;
-            width: 170px;
-            height: 30px;
-            font-size: 14px;
-            background-color: black;
-            display: flex;
-            align-items: center;
-            padding-left: 5px;
-            color: white;
-        }
         .tooltip {
             position: relative;
             display: inline-block;
@@ -221,6 +207,7 @@ const SearchResults: FunctionComponent<{
             background-color: #555;
             color: #fff;
             text-align: center;
+            font-size: 16px;
             border-radius: 6px;
             padding: 5px 0;
             position: absolute;
@@ -260,14 +247,8 @@ const SearchResults: FunctionComponent<{
             align-items: center;
             min-height: 100px;
         }
-        .top-review-sentiment {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding-bottom: 15px;
-        }
         .review-box {
-            margin-left: 40px;
+            margin-left: 70px;
             margin-right: 30px;
             background-color: rgba(0,0,0,0.4);
             color: white;

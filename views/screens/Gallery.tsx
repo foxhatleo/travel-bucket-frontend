@@ -46,7 +46,7 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
         <style jsx>{`
         .gallery {
           position: fixed;
-          overflow: scroll;
+          overflow-y: auto;
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;

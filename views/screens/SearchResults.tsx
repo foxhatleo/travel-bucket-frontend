@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react";
+import React, {FunctionComponent, useState} from "react";
 import Spinner from "../components/Spinner";
 import {SwitchTransition, CSSTransition} from "react-transition-group";
 import {SearchResult, SearchResults as SearchResultsArray} from "./SearchScreen";
@@ -11,9 +11,9 @@ export enum SearchResultsStatus {
     ERROR,
 }
 
-const getSentimentArrows = (sentiment: number) => {
-    const arrowType = sentiment > 0 ? "\u2191" : "\u2193";
-    const absoluteSentiment = Math.abs(sentiment);
+const getSentimentArrows = (avgSentiment: number) => {
+    const arrowType = avgSentiment > 0 ? "\u2191" : "\u2193";
+    const absoluteSentiment = Math.abs(avgSentiment);
     let numArrows;
     if (absoluteSentiment > 0.66) numArrows = 3;
     if (absoluteSentiment < 0.66 && absoluteSentiment > 0.33) numArrows = 2;
@@ -28,7 +28,6 @@ const SearchResults: FunctionComponent<{
 }> = (p) => {
 
     const is = (i: SearchResultsStatus) => (p.status == i ? " shown" : "");
-
     return <div>
         <SwitchTransition mode={"out-in"}>
             <CSSTransition key={p.status}
@@ -51,35 +50,55 @@ const SearchResults: FunctionComponent<{
                     </div>
                     <div className={"result parent" + (is(SearchResultsStatus.RESULT))}>
                         {p.results && p.results.map((r, i) =>
-                            <div className={"item-container"}>
-                                <a className={"item"} key={i} href={"#"} style={r.images.length > 0 ? {
+                            <>
+                                <a className={"photo"} key={i} href={"#"} style={r.images.length > 0 ? {
                                     backgroundImage: `url(${r.images[0]}`,
-                                } : {}} onClick={(e) => {
+                                } : {}}
+                                onClick={(e) => {
                                     e.preventDefault();
                                     p.showGallery(r);
                                 }}>
-                                    <span className={"city-name"}>{r.name}</span>
-                                    <div className={"sentiment"}>
-                                        <div className="tooltip">Sentiment
-                                            <span className="tooltiptext">
-                                                Sentiment is calculated on the Google Reviews for each location using nltk. 
-                                                From -1 (most negative) to 1 (most positive)
+                                    <div className={"item"}>
+                                        <div className="location-name">
+                                            <span>Location:</span>
+                                            <p style={{ marginLeft: "70px"}}>{r.name}</p>
+                                        </div>
+                                        <div className="top-review-text">
+                                            <span style={{ whiteSpace: "nowrap" }}>Top Review: </span>
+                                            <p className="review-box" dangerouslySetInnerHTML={{ __html: r.sentiment["most_positive"][0] }} />
+                                        </div>
+                                        <div className="top-review-sentiment">
+                                            <p style={{lineHeight: "normal"}}>
+                                                Top Review <br /> Sentiment:
+                                            </p>
+                                            <span className="" style={{
+                                                paddingLeft: "50px",
+                                            }}>
+                                                {r.sentiment["most_positive"][1].toFixed(2)}
                                             </span>
                                         </div>
-                                        :&nbsp;{r.sentiment["avg_sentiment"].toFixed(2)}&nbsp;
-                                        <span
-                                            style={{ 
-                                                color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
-                                                fontSize: "16px",
-                                                position: "relative",
-                                                bottom: "2px",
-                                            }}
-                                        >
-                                        {getSentimentArrows(r.sentiment["avg_sentiment"])}
+                                    </div>                                        
+                                </a>
+                                <div className={"avg-sentiment"}>
+                                    <div className="tooltip">Avg. Sentiment
+                                        <span className="tooltiptext">
+                                            Sentiment is calculated on the Google Reviews for each location using nltk. 
+                                            From -1 (most negative) to 1 (most positive)
                                         </span>
                                     </div>
-                                </a>
-                            </div>)}
+                                    :&nbsp;{r.sentiment["avg_sentiment"].toFixed(2)}&nbsp;
+                                    <span
+                                        style={{ 
+                                            color: r.sentiment["avg_sentiment"] > 0 ? "green" : "red",
+                                            fontSize: "16px",
+                                            position: "relative",
+                                            bottom: "2px",
+                                        }}
+                                    >
+                                    {getSentimentArrows(r.sentiment["avg_sentiment"])}
+                                    </span>
+                                </div>
+                            </>)}
                     </div>
                 </div>
             </CSSTransition>
@@ -88,18 +107,13 @@ const SearchResults: FunctionComponent<{
         div {
           width: 100%;
         }
-        .item-container {
-          display: block;
-          width: 100%;
-        }
-        .item {
+        .photo {
           display: block;
           text-decoration: none;
           color: white;
           text-align: left;
           width: 100%;
           font-size: 22px;
-          height: 100px;
           background: white no-repeat center center; 
           -webkit-background-size: cover;
           -moz-background-size: cover;
@@ -111,22 +125,23 @@ const SearchResults: FunctionComponent<{
           -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
           box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
         }
-        .item:hover {
+        .photo:hover {
           -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
           -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
           box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
         }
-        .item:active {
+        .photo:active {
           -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
           -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
           box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
         }
-        .item span.city-name {
-          display: block;
-          line-height: 100px;
+        .photo div.item {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
           width: 100%;
-          height: 100%;
-          padding-left: 50px;
+          height: 270px;
+          padding-left: 30px;
           -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,1);
           -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,1);
           box-shadow: 0px 0px 8px 0px rgba(0,0,0,1);
@@ -180,26 +195,27 @@ const SearchResults: FunctionComponent<{
         .fade-exit-active{
            transition: opacity 500ms;
         }
-        .sentiment {
+        .avg-sentiment {
             position: relative;
-            left: 85%;
-            top: -35px;
-            width: 140px;
+            left: 81%;
+            top: -40px;
+            width: 170px;
             height: 30px;
             font-size: 14px;
             background-color: black;
             display: flex;
             align-items: center;
             padding-left: 5px;
+            color: white;
         }
         .tooltip {
             position: relative;
             display: inline-block;
             border-bottom: 1px dotted white;
             width: auto;
-          }
+        }
           
-          .tooltip .tooltiptext {
+        .tooltip .tooltiptext {
             visibility: hidden;
             width: 200px;
             background-color: #555;
@@ -214,9 +230,9 @@ const SearchResults: FunctionComponent<{
             margin-left: -100px;
             opacity: 0;
             transition: opacity 0.3s;
-          }
+        }
           
-          .tooltip .tooltiptext::after {
+        .tooltip .tooltiptext::after {
             content: "";
             position: absolute;
             top: 100%;
@@ -225,12 +241,42 @@ const SearchResults: FunctionComponent<{
             border-width: 5px;
             border-style: solid;
             border-color: #555 transparent transparent transparent;
-          }
+        }
           
-          .tooltip:hover .tooltiptext {
+        .tooltip:hover .tooltiptext {
             visibility: visible;
             opacity: 1;
-          }
+        }
+        .location-name {
+            padding-top: 15px;
+            padding-bottom: 35px;
+            height: 50px;
+            display: flex;
+            flex-direction: row;
+        }
+        .top-review-text {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            min-height: 100px;
+        }
+        .top-review-sentiment {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding-bottom: 15px;
+        }
+        .review-box {
+            margin-left: 40px;
+            margin-right: 30px;
+            background-color: rgba(0,0,0,0.4);
+            color: white;
+            font-size: 13px;
+            height: fit-content;
+            max-height: 130px;
+            overflow-y: auto;
+            line-height: 1.4;
+        }
         `}</style>
     </div>;
 };

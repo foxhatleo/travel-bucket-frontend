@@ -51,11 +51,11 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
                     </div>
                 }
                 imageCaption={
-                    `Aperture: ${images[lightboxIndex]["AP"]}  ---${"  "}
-                    ISO: ${images[lightboxIndex]["ISO"]}  ---${"  "}
-                    Shutter speed: ${images[lightboxIndex]["SS"]}  ---${"  "}
-                    Camera: ${images[lightboxIndex]["camera"]}
-                    `
+                    `${images[lightboxIndex]["AP"] ? `Aperture: ${images[lightboxIndex]["AP"]}  ---${"  "}` : ''}
+                    ${images[lightboxIndex]["ISO"] ? `ISO: ${images[lightboxIndex]["ISO"]}  ---${"  "}` : ''}
+                    ${images[lightboxIndex]["EB"] ? `Exposure Balance: ${images[lightboxIndex]["EB"]}  ---${"  "}` : ''}
+                    ${images[lightboxIndex]["SS"] ? `Shutter speed: ${images[lightboxIndex]["SS"]}  ---${"  "}` : ''}
+                    ${images[lightboxIndex]["camera"] ? `Camera: ${images[lightboxIndex]["camera"]}` : ''}`
                 }
                 nextSrc={images[(lightboxIndex + 1) % images.length]["url"]}
                 prevSrc={images[(lightboxIndex + images.length - 1) % images.length]["url"]}

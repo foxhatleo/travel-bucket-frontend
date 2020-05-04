@@ -24,7 +24,7 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
                         }}
                         style={{
                             cursor: "pointer",
-                            backgroundImage: `url(${r})`
+                            backgroundImage: `url(${r["url"]})`
                         }} 
                     />
                 )}
@@ -32,7 +32,7 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
         </CSSTransition>
         {lightboxIndex !== -1 && 
         <Lightbox
-            mainSrc={images[lightboxIndex]}
+            mainSrc={images[lightboxIndex]["url"]}
             onCloseRequest={() => setlightboxIndex(-1)}
             nextSrc={images[(lightboxIndex + 1) % images.length]}
             prevSrc={images[(lightboxIndex + images.length - 1) % images.length]}

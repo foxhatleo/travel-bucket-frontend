@@ -52,7 +52,7 @@ const SearchResults: FunctionComponent<{
                         {p.results && p.results.map((r, i) =>
                             <>
                                 <a className={"photo"} key={i} href={"#"} style={r.images.length > 0 ? {
-                                    backgroundImage: `url(${r.images[0]}`,
+                                    backgroundImage: `url(${r.images[0]["url"]}`,
                                 } : {}}
                                 onClick={(e) => {
                                     e.preventDefault();

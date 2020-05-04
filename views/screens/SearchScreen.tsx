@@ -9,7 +9,7 @@ export interface SearchScreenProps {
 }
 
 export interface SearchResult {
-    images: string[];
+    images: any[];
     name: string;
     reviews: string[];
     sentiment: {};

@@ -34,8 +34,8 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
         <Lightbox
             mainSrc={images[lightboxIndex]["url"]}
             onCloseRequest={() => setlightboxIndex(-1)}
-            nextSrc={images[(lightboxIndex + 1) % images.length]}
-            prevSrc={images[(lightboxIndex + images.length - 1) % images.length]}
+            nextSrc={images[(lightboxIndex + 1) % images.length]["url"]}
+            prevSrc={images[(lightboxIndex + images.length - 1) % images.length]["url"]}
             onMovePrevRequest={() =>
                 setlightboxIndex((lightboxIndex + images.length - 1) % images.length)
             }

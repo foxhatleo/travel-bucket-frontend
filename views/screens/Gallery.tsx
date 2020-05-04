@@ -67,15 +67,17 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
           left: 0;
           background: black;
           background: rgba(0, 0, 0, .5);
+          align-content: flex-start;
           backdrop-filter: blur(15px);
           -webkit-backdrop-filter: blur(15px);
         }
         .block {
           // width: 25vw
-          flex: 1 0 21%;
+          flex: 1 0 25%;
           height: 25vw;
           display: inline-block;
           position: relative;
+          flex-grow: 0;
           margin: 0;
           padding: 0;
           background: black no-repeat center center; 
@@ -117,7 +119,7 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
         }
         @media (max-width: 600px) {
           .block {
-            width: 50vw;
+            flex: 1 0 50%;
             height: 50vw;
           }
         }

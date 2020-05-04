@@ -113,7 +113,7 @@ const SearchResults: FunctionComponent<{
           text-align: left;
           width: 100%;
           font-size: 22px;
-          background: white no-repeat center center; 
+          background: black no-repeat center center; 
           -webkit-background-size: cover;
           -moz-background-size: cover;
           -o-background-size: cover;

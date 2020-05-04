@@ -32,14 +32,28 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
         </CSSTransition>
         {lightboxIndex !== -1 && 
         <>  
-            <a className="button" href="google.com">
             <Lightbox
                 mainSrc={images[lightboxIndex]["url"]}
                 onCloseRequest={() => setlightboxIndex(-1)}
+                imageTitle={
+                    <div>
+                        {`Click `}
+                        <a
+                            href={images[lightboxIndex]["url"]}
+                            target="_blank"
+                            style={{
+                                color: "white"
+                            }}
+                        >
+                            here
+                        </a>
+                        {` to view picture on Flickr!`}
+                    </div>
+                }
                 imageCaption={
                     `Aperture: ${images[lightboxIndex]["AP"]}  ---${"  "}
                     ISO: ${images[lightboxIndex]["ISO"]}  ---${"  "}
-                    Shutter speed: ${images[lightboxIndex]["SS"]}---${"  "}
+                    Shutter speed: ${images[lightboxIndex]["SS"]}  ---${"  "}
                     Camera: ${images[lightboxIndex]["camera"]}
                     `
                 }
@@ -52,7 +66,6 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
                     setlightboxIndex((lightboxIndex + 1) % images.length)
                 }
             />
-            </a>
         </>}
         <style jsx>{`
         .gallery {

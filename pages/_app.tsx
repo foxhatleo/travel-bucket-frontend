@@ -77,6 +77,10 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
           border-collapse: collapse;
           border-spacing: 0;
         }
+        b {
+          border-bottom: solid 1px white;
+          font-weight: 700;
+        }
         .button {
           display: inline-block;
           font-size: 15px;

@@ -209,7 +209,7 @@ export const SearchResultBox: FunctionComponent<SearchResultBoxProps> = ({result
                 min-height: 100px;
             }
             .review-box {
-                margin-left: 70px;
+                margin-left: 100px;
                 margin-right: 30px;
                 background-color: rgba(0,0,0,0.4);
                 color: white;

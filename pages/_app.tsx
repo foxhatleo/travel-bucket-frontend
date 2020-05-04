@@ -85,8 +85,25 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
           text-transform: uppercase;
           color: white;
           background: #1976d2;
+          border: none;
+          cursor: pointer;
+          appearance: none;
           transition: .3s ease-in-out background;
           padding: 10px;
+        }
+        .button:disabled {
+          opacity: .6;
+          pointer-events: none;
+        }
+        .button.white {
+          background: white;
+          color: black;
+        }
+        .button.white:hover {
+          background: #dfdfdf;
+        }
+        .button.white:active {
+          background: #bcbcbc;
         }
         .button:hover {
           background: #2196f3;

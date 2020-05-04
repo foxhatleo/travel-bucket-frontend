@@ -76,15 +76,15 @@ export const SearchResultBox: FunctionComponent<SearchResultBoxProps> = ({result
                         marginBottom: "20px"
                     }}>
                         <div className="tooltip">
-                            <p>Avg Sentiment:</p>
+                            <p>Approval:</p>
                             <span className="tooltiptext">
-                                Sentiment is the average "approval" of a location. The most negative rating is -1,
-                                and the most positive rating is 1. Sentiment is calculated on the Google Reviews for each
+                                Aka sentiment. The lowest approval is -1
+                                and the highest approval is 1. It is calculated on the Google Reviews for each
                                 location using nltk. 
                             </span>
                         </div>
                         <span style={{
-                            paddingLeft: "38px",
+                            paddingLeft: "90px",
                         }}>
                             {result.sentiment["avg_sentiment"].toFixed(2)}
                             <span style={{ 

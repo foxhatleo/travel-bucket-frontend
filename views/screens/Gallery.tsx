@@ -31,18 +31,29 @@ export const Gallery: FunctionComponent<{result: SearchResult | null; onClose: (
             </div> : <></>}
         </CSSTransition>
         {lightboxIndex !== -1 && 
-        <Lightbox
-            mainSrc={images[lightboxIndex]["url"]}
-            onCloseRequest={() => setlightboxIndex(-1)}
-            nextSrc={images[(lightboxIndex + 1) % images.length]["url"]}
-            prevSrc={images[(lightboxIndex + images.length - 1) % images.length]["url"]}
-            onMovePrevRequest={() =>
-                setlightboxIndex((lightboxIndex + images.length - 1) % images.length)
-            }
-            onMoveNextRequest={() =>
-                setlightboxIndex((lightboxIndex + 1) % images.length)
-            }
-        />}
+        <>  
+            <a className="button" href="google.com">
+            <Lightbox
+                mainSrc={images[lightboxIndex]["url"]}
+                onCloseRequest={() => setlightboxIndex(-1)}
+                imageCaption={
+                    `Aperture: ${images[lightboxIndex]["AP"]}  ---${"  "}
+                    ISO: ${images[lightboxIndex]["ISO"]}  ---${"  "}
+                    Shutter speed: ${images[lightboxIndex]["SS"]}---${"  "}
+                    Camera: ${images[lightboxIndex]["camera"]}
+                    `
+                }
+                nextSrc={images[(lightboxIndex + 1) % images.length]["url"]}
+                prevSrc={images[(lightboxIndex + images.length - 1) % images.length]["url"]}
+                onMovePrevRequest={() =>
+                    setlightboxIndex((lightboxIndex + images.length - 1) % images.length)
+                }
+                onMoveNextRequest={() =>
+                    setlightboxIndex((lightboxIndex + 1) % images.length)
+                }
+            />
+            </a>
+        </>}
         <style jsx>{`
         .gallery {
           position: fixed;

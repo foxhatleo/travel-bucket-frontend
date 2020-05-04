@@ -39,7 +39,8 @@ export const SearchResultBox: FunctionComponent<SearchResultBoxProps> = ({result
                         </div>
                         <div style={{
                             display: "flex",
-                            flexDirection: "column"
+                            flexDirection: "column",
+                            minWidth: "90%"
                         }}>
                             <p className="review-box" dangerouslySetInnerHTML={{ __html: result.reviews[reviewIndex] }} />
                             <div style={{

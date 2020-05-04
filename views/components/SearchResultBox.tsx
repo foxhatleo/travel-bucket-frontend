@@ -72,7 +72,9 @@ export const SearchResultBox: FunctionComponent<SearchResultBoxProps> = ({result
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div style={{
+                        marginBottom: "20px"
+                    }}>
                         <div className="tooltip">
                             <p>Avg Sentiment:</p>
                             <span className="tooltiptext">
@@ -210,6 +212,7 @@ export const SearchResultBox: FunctionComponent<SearchResultBoxProps> = ({result
                 min-height: 100px;
             }
             .review-box {
+                margin-top: 40px;
                 margin-left: 100px;
                 margin-right: 30px;
                 background-color: rgba(0,0,0,0.4);

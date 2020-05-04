@@ -78,7 +78,8 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
           border-spacing: 0;
         }
         b {
-          border-bottom: solid 1px white;
+          color: #70b7ff;
+          border-bottom: solid 1px #70b7ff;
           font-weight: 700;
         }
         .button {

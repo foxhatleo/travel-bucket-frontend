@@ -75,7 +75,7 @@ const SearchScreen: FunctionComponent<SearchScreenProps> = (p) => {
                         type="text"
                         name="topics"
                         value={searchTopics}
-                        addKeys={[9, 13, 32]}
+                        addKeys={[9, 13, 32, 188]}
                         onChange={e => setSearchTopics(e)}
                         inputProps={{
                             placeholder: searchTopics.length ? "" : "Enter topic(s).",

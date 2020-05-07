@@ -15,8 +15,8 @@ const HomeScreen: FunctionComponent<HomeScreenProps> = (p) => {
             <div className={"bg1"} />
             <div className={"bg2"} />
             <div className={"search-inner"}>
-                <div className={"subtext"}>FIND YOURSELF IN TRAVEL</div>
-                <h1>Travel Bucket</h1>
+                <div className={"subtext"}>FIND PHOTO SPOTS</div>
+                <h1>Viewfinder</h1>
                 <Link href={"/search"}><a className={"search-go button"}>Start exploring!</a></Link>
             </div>
         </div>

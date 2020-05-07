@@ -28,7 +28,7 @@ const App: FunctionComponent<AppProps> = ({Component, pageProps}) => {
         <SearchScreen showing={showSearch} />
         <Component {...pageProps} report={report} />
         <Head>
-            <title>Travel Bucket</title>
+            <title>ViewFinder</title>
         </Head>
         <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet" />
         <style>{`
